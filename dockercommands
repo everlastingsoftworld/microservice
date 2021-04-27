@@ -12,4 +12,4 @@ GO
 
 Build the images
 
-docker build -f ./CustomerSrevice/Dockerfile -t customerapp .
+docker build -f ./CustomerService/Dockerfile -t customerapp .
