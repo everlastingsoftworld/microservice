@@ -7,3 +7,7 @@ docker exec -it sql1 "bash"
 
 get password:<type password>
 
+SELECT Name from sys.Databases;
+GO
+
+
