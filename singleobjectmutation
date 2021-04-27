@@ -1,0 +1,77 @@
+using GraphQL;
+using GraphQL.Types;
+using InventoryAPI.GraphqlTypes;
+using InventoryAPI.Models;
+using InventoryAPI.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+//mutation($category: categoryInput!){
+//    createCategory(category:$category){
+
+//        categoryName
+//    }
+
+//}
+
+//{
+//    "category": {
+//        "categoryName": "Furniture"
+//    }
+//}
+
+
+//# Write your query or mutation here
+//mutation($categoryId: Long!){
+//    deleteCategory(categoryId:$categoryId)
+// }
+//{
+//    "categoryId": 2
+//}
+
+namespace InventoryAPI.Schemas
+{
+    public class CategoryMutation:ObjectGraphType
+    {
+        public CategoryMutation(ICategoryRepo repository)
+        {
+            Field<CategoryType>(
+                "createCategory",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<CategoryInputType>>
+                { Name = "category" }),
+                resolve: context =>
+                {
+                    var category = context.GetArgument<Category>("category");
+                    return repository.AddCategory(category);
+                }
+            );
+
+            Field<StringGraphType>(
+                "deleteCategory",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<LongGraphType>>
+                { Name = "categoryId" }),
+                resolve: context =>
+                {
+                    var categoryId = context.GetArgument<long>("categoryId");
+                    repository.DeleteCategoryById(categoryId);
+                    return $"CategoryId {categoryId} is successfully deleted";
+                }
+            );
+
+           // Field<CategoryType>(
+           //    "updateCategory",
+           //    arguments: new QueryArguments(new QueryArgument<NonNullGraphType<CategoryType>>
+           //    { Name = "category" }),
+           //    resolve: context =>
+           //    {
+           //        var category= context.GetArgument<Category>("category");
+           //        return repository.UpdateCategoryById(category);
+                  
+           //    }
+           //);
+
+        }
+
+    }
+}
