@@ -1,0 +1,22 @@
+//mutation($category: categoryInput!){
+//    createCategory(category:$category){
+
+//        categoryName
+//    }
+
+//}
+
+//{
+//    "category": {
+//        "categoryName": "Furniture"
+//    }
+//}
+
+
+//# Write your query or mutation here
+//mutation($categoryId: Long!){
+//    deleteCategory(categoryId:$categoryId)
+// }
+//{
+//    "categoryId": 2
+//}
