@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  customerservice:
+    image: ${DOCKER_REGISTRY-}customerservice
+    build:
+      context: .
+      dockerfile: CustomerService/Dockerfile
+    depends_on:
+      - sqlservercustomerservice
+  sqlservercustomerservice:  
+    image: microsoft/mssql-server-linux 
+    hostname: 'sqlservercustomerservice'  
+    environment:  
+      ACCEPT_EULA: 'Y' 
+      SA_PASSWORD: "Vignesh@95"  
+    volumes:  
+      - ./customerapi:/var/opt/mssql/data  
+    ports:  
+      - '1406:1433'  
+    expose:  
+      - 1406 
