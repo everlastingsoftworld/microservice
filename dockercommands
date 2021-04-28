@@ -4,11 +4,11 @@ docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Testing!123"  -p 1408:1433 --name 
 docker exec -it sql1 "bash"
 
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA 
-
+get password:<type password>
 
 docker exec -it dockercompose13882015268577213511_sqlservercustomerservice_1 /opt/mssql-tools/bin/sqlcmd -U sa -P Vignesh@95
 
-get password:<type password>
+
 
 SELECT Name from sys.Databases;
 GO
