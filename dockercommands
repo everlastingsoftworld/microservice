@@ -5,6 +5,9 @@ docker exec -it sql1 "bash"
 
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA 
 
+
+docker exec -it dockercompose13882015268577213511_sqlservercustomerservice_1 /opt/mssql-tools/bin/sqlcmd -U sa -P Vignesh@95
+
 get password:<type password>
 
 SELECT Name from sys.Databases;
