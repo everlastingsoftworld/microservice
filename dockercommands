@@ -221,3 +221,12 @@ $ kubectl apply -f app-v2.yaml
 $ kubectl logs deploy/my-app
 
 
+sql server testing
+
+kubectl exec -it myapp-db-deployment-789b766d79-kxvcq -- /bin/bash
+-----------------------
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Vignesh@95' -Q 'CREATE DATABASE RPSDB'
+------------------------------
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Vignesh@95' -Q 'SELECT name FROM master.dbo.sysdatabases'
+
+
