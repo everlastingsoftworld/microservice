@@ -28,3 +28,196 @@ docker tag customerservice:latest   eswaribala/ecommerceboarepo:customerapp
 
 docker push eswaribala/ecommerceboarepo:customerapp
 
+-------------------------------------------------------------------------
+Kubernetes
+kubectl get pods --all-namespaces
+------------------------------------------------
+kubectl cluster-info
+--------------------------------
+kubectl version
+---------------------------------------------
+//volume persistent check
+
+kubectl get pvc
+//delete
+kubectl delete pvc name
+-----------------------------------
+kubectl config current-context
+---------------------------------------------
+kubectl cluster-info
+------------------------------------------------
+kubectl get nodes
+------------------------------------------------
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+
+kubectl get all --all-namespaces
+
+kubectl get all -n kubernetes-dashboard
+
+
+
+goto g:\localdisk\docker
+
+kubectl apply -f  dashboard-adminuser.yaml
+
+kubectl apply -f admin-role-binding.yml
+
+go to powershell run the following cmd
+
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | sls admin-user | ForEach-Object { $_ -Split '\s+' } | Select -First 1)
+
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | sls eks-admin | ForEach-Object { $_ -Split '\s+' } | Select -First 1)
+
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}')
+
+token
+
+eyJhbGciOiJSUzI1NiIsImtpZCI6IkoxVkIzcnpBVzdydHBTenVzZ0dBam5iM1Y0ZXN2LW52cnpkajMxbUY0NTgifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLW1wbWxiIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI0ZDc3YmNlNC02YTQ5LTRkZGYtOWE0Mi1lZjM0NmJhOWE4NzEiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.Me9NarGVyd1dvTuBi77u9bXQ8ILlibNxn5gQTdxkyTLEgHG3hQmrEx8g9-WDtgrkEI9Nzjgv_Ri79Ka5T6JG5Fl1aIlnSnfKABOfxxz-HK-K16cXnwyzu9e5q3dDfcudz690TQoIFXEVpBI56SxmHX3PqzquSBw-xnle1mflYm8HMgXHKFYmt9yxvMbUjAi91kTjVuANBj_u_7xsLDAGrpY8TmG23-EsOYx-2cC2jIAbj3CJUosGvQDqpiux99JLsIttjMUC8vcZ_AEkDd-1lUCqFuHSk81iKgUgB7ejHGiyUlP2Ct6zSaO-ypFaPzRMWnTAAD7jarN7p9W87zIrSA
+
+-------------------------------------------------------
+
+
+===========================
+kubectl proxy
+Starting to serve on 127.0.0.1:8001
+http://localhost:8001
+======================================================
+
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+-------------------------------------------------
+kubectl get all
+--------------------------------------------------
+goto apppointmenntdocker project in f:\virtusausjune
+ kubectl apply -f mysql-pv.yaml
+kubectl apply -f mysql-deployment.yaml
+kubectl get all
+kubectl get services
+kubectl describe deployment mysql
+kubectl get pods -l app=mysql
+kubectl describe pvc mysql-pv-claim
+kubectl logs mysql-78dc9c6b94-vfgtq
+kubectl get services
+get ipaddress
+kubectl run -it --rm --image=mysql --restart=Never mysql-client -- mysql -h mysql -ppassword
+(don't change password it's ppassword)
+create database virtusausappointmentdb;
+show databases;
+
+
+kubectl exec -it <podname> -- psql -h <servicename> -U postgres 
+
+======================================================
+Creating the secrets
+echo -n 'dbadmin' > ./username.txt
+echo -n 'db3344@@pwd' > ./password.txt
+kubectl create secret generic my-db-secret-from-files --from-file=./username.txt --from-file=./password.txt
+kubectl get secrets
+
+kubectl describe secrets/my-db-secret-from-files
+
+kubectl apply -f mysecpod.yaml
+
+kubectl describe -f mysecpod.yaml 
+
+method 2
+kubectl create secret generic mysql-database --from-literal=MYSQL_DATABASE="thedatabase"
+kubectl create secret generic mysql-username --from-literal=MYSQL_USERNAME="theusername"
+kubectl create secret generic mysql-password --from-literal=MYSQL_PASSWORD="thepassword"
+
+
+
+
+
+
+
+
+kubectl create secret generic mysql-root-pass --from-literal=password=password
+
+kubectl create secret generic mysql-user-pass --from-literal=username=demo_user --from-literal=password=demo_pass
+
+kubectl create secret generic mysql-db-url --from-literal=database=virtusausappointmentdb --from-literal=url='jdbc:mysql://mysql:3306/virtusausappointmentdb?useSSL=false
+
+kubectl get secrets
+kubectl describe secrets mysql-user-pass
+kubectl get persistentvolumes
+============================================================
+kubectl create deployment demo --image=appointmentapp/v1 --dry-run -o=yaml > deployment.yaml
+
+------------------------------------------------
+kubectl create service clusterip demo --tcp=8070:8070 --dry-run -o=yaml >> deployment.yaml
+
+==================================================
+kubectl apply -f deployment.yaml
+kubectl get pods
+kubectl get services
+
+kubectl port-forward service/demo 8070:8070
+
+======================================================
+delete service
+kubectl delete svc demo
+delete pod
+kubectl delete pod podname
+delete deployment
+kubectl delete deployment demo
+==================================================
+kubectl get nodes
+----------------------------------
+kubectl get deployments
+-------------------------------
+kubectl get replicasets
+kubectl describe replicasets
+minikube config set vm-driver virtualbox
+-----------------------------------
+kubectl expose deployment dockersampling --type=LoadBalancer 
+--name=samplingservice
+kubectl expose deployment mssql --type=LoadBalancer --name=mssql
+-------------------------------------
+
+kubectl get services samplingservice
+
+kubectl describe services my-service
+kubectl describe pods helmdemo-79ccc84f45-hnlnm
+kubectl get endpoints
+ kubectl scale --replicas=1 deployment busybox
+
+kubectl autoscale deployment dockersampling --min=1 --max=4 --cpu-percent=20
+kubectl scale --replicas=3 deployment aspnetcoreinvapp-v1 
+kubectl autoscale deployment aspnetcoremalinvapp-v1 --min=1 --max=4 --cpu-percent=20
+kubectl scale --replicas=3 deployment aspnetcoremalinvapp-v1
+kubectl autoscale deployment aspnetcoreinvapp-v1 --min=1 --max=4 --cpu-percent=20
+minikube addons list
+minikube addons enable heapster
+kubectl autoscale deployment <deployment-name> --min=2 --max=5 --cpu-percent=80
+minikube addons enable ingress
+--------------------------------------
+kubectl create -f "G:\Local disk\BOAChennai\deployment.yml"
+----------------------------------------------
+-----------------------------------------------
+kubectl apply -f "G:\Local disk\BOAChennai\k8service.yml"
+--------------------------------------------------
+ http://localhost:30001
+-------------------------------------
+# delete all pods
+kubectl delete --all pods --namespace=default
+
+
+# delete all deployments
+ kubectl delete --all deployments --namespace=default
+ 
+ # delete all services
+ kubectl delete --all services --namespace=default
+ ---------------------------------------------------
+Recreate
+
+Deploy the first application
+$ kubectl apply -f app-v1.yaml
+
+# Test if the deployment was successful
+kubectl logs deploy/my-app
+$ kubectl apply -f app-v2.yaml
+# To see the deployment in action, open a new terminal and run the following
+# command
+$ kubectl logs deploy/my-app
+
+
