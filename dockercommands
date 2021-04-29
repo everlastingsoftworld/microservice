@@ -230,3 +230,6 @@ kubectl exec -it myapp-db-deployment-789b766d79-kxvcq -- /bin/bash
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Vignesh@95' -Q 'SELECT name FROM master.dbo.sysdatabases'
 
 
+kubectl expose deployment aspnetcorecustomerapp-v1 --type=LoadBalancer --name=aspnetcore-customerservice-v1
+
+
