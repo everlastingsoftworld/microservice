@@ -1,0 +1,6 @@
+1.go to cmd
+G:\Local disk\dotnetcoremicroservices\dotnet-core-prometheus-grafana-master
+2.docker build people api and locations api
+3. docker-compose up
+4. Grafana password refer docker compose file
+5.http://prometheus:9090/ in grafana otherwise bad gateway
